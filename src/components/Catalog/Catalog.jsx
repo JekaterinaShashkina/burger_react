@@ -14,7 +14,6 @@ export const Catalog = () => {
   const { category, activeCategory } = useSelector((state) => state.category);
 
   useEffect(() => {
-    console.log("Kat");
     if (category.length) {
       dispatch(productRequestAsync(category[activeCategory].title));
     }
@@ -28,13 +27,19 @@ export const Catalog = () => {
           <h2 className={style.title}>{category[activeCategory]?.rus}</h2>
 
           <div className={style.wrap_list}>
-            <ul className={style.list}>
-              {productsList.map((item) => (
-                <li key={item.id} className={style.item}>
-                  <CatalogProduct item={item} />
-                </li>
-              ))}
-            </ul>
+            {productsList.length ? (
+              <ul className={style.list}>
+                {productsList.map((item) => (
+                  <li key={item.id} className={style.item}>
+                    <CatalogProduct item={item} />
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className={style.empty}>
+                К сожалению товар данной категории отсутствует
+              </p>
+            )}
           </div>
         </div>
       </Container>
